@@ -669,3 +669,13 @@ h4 {
 .qtitle span {
   color: var(--active);
 }
+
+.notFound {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 56vh;
+  color: #002333;
+  font-weight: 600;
+  font-size: 2rem;
+}

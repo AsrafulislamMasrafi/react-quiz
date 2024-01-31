@@ -1,10 +1,29 @@
-import Nav from "./components/pages/nav";
+import { Route, Routes } from "react-router-dom";
+import PrivateRoute from "./components/PrivateRoute";
+import { AuthProvider } from "./contexts/authContext";
+import Home from "./pages/Home/index";
+import Login from "./pages/auth/login";
+import Signup from "./pages/auth/signup";
+import Nav from "./pages/nav";
+import NotFound from "./pages/notFount";
+import Quiz from "./pages/quiz/Quiz";
+import Result from "./pages/quiz/Result";
 
 function App() {
   return (
-    <div>
+    <AuthProvider>
       <Nav />
-    </div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/quiz" element={<Quiz />} />
+          <Route path="/result" element={<Result />} />
+        </Route>
+        <Route path="/*" element={<NotFound />} />
+      </Routes>
+    </AuthProvider>
   );
 }
 
