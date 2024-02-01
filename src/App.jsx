@@ -18,7 +18,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route element={<PrivateRoute />}>
-          <Route path="/quiz" element={<Quiz />} />
+          <Route path="/quiz/:id" element={<Quiz />} />
           <Route path="/result" element={<Result />} />
         </Route>
         <Route path="/*" element={<NotFound />} />

@@ -1,30 +1,10 @@
-import { Link } from "react-router-dom";
 import Layout from "../../components/Layout";
-import { Video } from "./Video";
+import Videos from "./Videos";
 
 export default function Home() {
   return (
     <Layout>
-      <div className="videos">
-        <Link to="/quiz">
-          <Video />
-        </Link>
-        <Link to="/quiz">
-          <Video />
-        </Link>
-        <Link to="/quiz">
-          <Video />
-        </Link>
-        <Link to="/quiz">
-          <Video />
-        </Link>
-        <Link to="/quiz">
-          <Video />
-        </Link>
-        <Link to="/quiz">
-          <Video />
-        </Link>
-      </div>
+      <Videos />
     </Layout>
   );
 }
