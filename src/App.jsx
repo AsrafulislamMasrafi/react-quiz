@@ -19,7 +19,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route element={<PrivateRoute />}>
           <Route path="/quiz/:id" element={<Quiz />} />
-          <Route path="/result" element={<Result />} />
+          <Route path="/result/:id" element={<Result />} />
         </Route>
         <Route path="/*" element={<NotFound />} />
       </Routes>
