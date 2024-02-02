@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
-
-export function ProgressBar({ nextBtn, width,previousBtn }) {
+export function ProgressBar({ nextBtn, width, previousBtn, nextQ }) {
   return (
     <div className="progressBar">
       <div className="backButton">
-        <span className="material-icons-outlined" onClick={previousBtn}> arrow_back </span>
+        <span className="material-icons-outlined" onClick={previousBtn}>
+          {" "}
+          arrow_back{" "}
+        </span>
       </div>
       <div className="rangeArea">
         <div className="tooltip">24% Complete!</div>
@@ -18,10 +19,10 @@ export function ProgressBar({ nextBtn, width,previousBtn }) {
         </div>
       </div>
       {/* <Link to="/result"> */}
-        <button className="button next" onClick={nextBtn}>
-          <span>Next Question</span>
-          <span className="material-icons-outlined"> arrow_forward </span>
-        </button>
+      <button className="button next" onClick={nextBtn}>
+        <span>{nextQ}</span>
+        <span className="material-icons-outlined"> arrow_forward </span>
+      </button>
       {/* </Link> */}
     </div>
   );

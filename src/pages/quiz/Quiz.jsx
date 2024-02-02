@@ -88,6 +88,7 @@ export default function Quiz() {
           <div className="answers">
             {qna[currentQuestion].options.map((option, i) => (
               <Options
+                control={true}
                 id={option.title}
                 onChange={(e) =>
                   dispatch({
@@ -111,6 +112,7 @@ export default function Quiz() {
         previousBtn={previousButtonHandle}
         width={`${percentage}%`}
         nextBtn={percentage === 100 ? submitHandle : nextButtonHandle}
+        nextQ={percentage === 100 ? "Submit Quiz" : "Next Question"}
       />
       <MiniPlayer />
     </Layout>

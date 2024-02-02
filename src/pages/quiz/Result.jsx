@@ -1,126 +1,68 @@
+import _ from "lodash";
+import { useLocation, useParams } from "react-router-dom";
 import Img from "../../assets/images/success.png";
-import Layout from "../../components/Layout";
+import { Options } from "../../components/Options";
+import { QuizResult } from "../../components/QuizResult";
+import useAnswer from "../../hooks/useAnswer";
+import { AnsOfQuestion } from "./../../components/AnsOfQuestion";
 
 export default function Result() {
+  const { id } = useParams();
+  const location = useLocation();
+  const { state } = location || {};
+
+  const { error, loading, answer } = useAnswer(id);
+
+  function calculate() {
+    let score = 0;
+    answer.forEach((question, i) => {
+      let correctIndex = [];
+      let checkedIndex = [];
+      question.options.forEach((option, i2) => {
+        if (option.correct) correctIndex.push(i2);
+        if (state[i].options[i2].checked) {
+          checkedIndex.push(i2);
+          option.checked = true;
+        }
+      });
+      if (_.isEqual(correctIndex, checkedIndex)) {
+        score = score + 5;
+      }
+    });
+    return score;
+  }
+
+  const userScore = calculate();
+
   return (
-    <Layout>
-      <div className="summary">
-        <div className="point">
-          {/* <!-- progress bar will be placed here --> */}
-          <p className="score">
-            Your score is <br />5 out of 10
-          </p>
-        </div>
+    <>
+      {loading && <h1>Loading...</h1>}
+      {error && <h1>There was a problem</h1>}
 
-        <div className="badge">
-          <img src={Img} alt="Success" />
-        </div>
-      </div>
-
-      <div className="analysis">
-        <h1>Question Analysis</h1>
-        <h4>You answerd 5 out of 10 questions correctly</h4>
-
-        <div className="question">
-          <div className="qtitle">
-            <span className="material-icons-outlined"> help_outline </span>
-            Here goes the question from Learn with Sumit?
-          </div>
-          <div className="answers">
-            <label className="answer" htmlFor="option1">
-              A New Hope 1
-            </label>
-
-            <label className="answer" htmlFor="option2">
-              A New Hope 1
-            </label>
-
-            <label className="answer" htmlFor="option3">
-              A New Hope 1
-            </label>
-
-            <label className="answer wrong" htmlFor="option4">
-              <span>A New Hope 1</span>
-              <span>Your answer</span>
-            </label>
-
-            <label className="answer" htmlFor="option5">
-              A New Hope 1
-            </label>
-
-            <label className="answer" htmlFor="option6">
-              A New Hope 1
-            </label>
-
-            <label className="answer correct" htmlFor="option7">
-              <span>A New Hope 1</span>
-              <span>Correct answer</span>
-            </label>
-
-            <label className="answer" htmlFor="option8">
-              A New Hope 1
-            </label>
-
-            <label className="answer" htmlFor="option9">
-              A New Hope 1
-            </label>
-
-            <label className="answer" htmlFor="option10">
-              A New Hope 1
-            </label>
-          </div>
-        </div>
-
-        <div className="question">
-          <div className="qtitle">
-            <span className="material-icons-outlined"> help_outline </span>
-            Here goes the question from Learn with Sumit?
-          </div>
-          <div className="answers">
-            <label className="answer" htmlFor="option1">
-              A New Hope 1
-            </label>
-
-            <label className="answer" htmlFor="option2">
-              A New Hope 1
-            </label>
-
-            <label className="answer" htmlFor="option3">
-              A New Hope 1
-            </label>
-
-            <label className="answer wrong" htmlFor="option4">
-              <span>A New Hope 1</span>
-              <span>Your answer</span>
-            </label>
-
-            <label className="answer" htmlFor="option5">
-              A New Hope 1
-            </label>
-
-            <label className="answer" htmlFor="option6">
-              A New Hope 1
-            </label>
-
-            <label className="answer correct" htmlFor="option7">
-              <span>A New Hope 1</span>
-              <span>Correct answer</span>
-            </label>
-
-            <label className="answer" htmlFor="option8">
-              A New Hope 1
-            </label>
-
-            <label className="answer" htmlFor="option9">
-              A New Hope 1
-            </label>
-
-            <label className="answer" htmlFor="option10">
-              A New Hope 1
-            </label>
-          </div>
-        </div>
-      </div>
-    </Layout>
+      {answer && answer.length > 0 && (
+        <QuizResult
+          score={`${userScore} out of ${answer.length * 5}
+        `}
+          Img={Img}
+        >
+          {answer.map((question, i) => (
+            <AnsOfQuestion key={i + question.title} title={question.title}>
+            {question.options.map((option, i) => (
+                <Options
+                  id={option + i}
+                  key={option + i}
+                  control={false}
+                  className={
+                    option.correct ? "correct" : option.checked ? "wrong" : null
+                  }
+                >
+                  {option.title}
+                </Options>
+              ))}
+            </AnsOfQuestion>
+          ))}
+        </QuizResult>
+      )}
+    </>
   );
 }
