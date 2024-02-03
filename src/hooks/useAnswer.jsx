@@ -6,7 +6,7 @@ export default function useAnswer(videoId) {
   const [error, setError] = useState(false);
   const [answer, setAnswer] = useState([]);
   useEffect(() => {
-    async function videoFetch() {
+    async function answerFetch() {
       const db = getDatabase();
       const quizRef = ref(db, "answers/" + videoId + "/questions");
       const answerQuery = query(quizRef, orderByKey());
@@ -30,7 +30,7 @@ export default function useAnswer(videoId) {
       }
     }
 
-    videoFetch();
+    return () => answerFetch();
   }, [videoId]);
   return {
     loading,

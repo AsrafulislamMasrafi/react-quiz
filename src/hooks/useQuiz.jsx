@@ -7,7 +7,7 @@ export default function useQuiz(videoId) {
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
-    async function videoFetch() {
+    async function quizFetch() {
       const db = getDatabase();
       const quizRef = ref(db, "quiz/" + videoId + "/questions");
       const quizQuery = query(quizRef, orderByKey());
@@ -31,7 +31,7 @@ export default function useQuiz(videoId) {
       }
     }
 
-    videoFetch();
+    return () => quizFetch();
   }, [videoId]);
   return {
     loading,

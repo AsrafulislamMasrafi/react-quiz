@@ -45,7 +45,7 @@ export default function useVideoList(page) {
       }
     }
 
-    videoFetch();
+    return () => videoFetch();
   }, [page]);
   return {
     loading,
