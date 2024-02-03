@@ -1,7 +1,7 @@
 export function Options({
   children,
   id,
-  className,
+  className = "",
   onChange,
   checked,
   control,
@@ -20,12 +20,7 @@ export function Options({
         </label>
       ) : (
         <label className={`answer ${className}`} htmlFor={id}>
-          <input
-            type="checkbox"
-            id={id}
-            defaultChecked={checked}
-            disabled
-          />
+          <input type="checkbox" id={id} defaultChecked={checked} disabled />
           {children}
         </label>
       )}

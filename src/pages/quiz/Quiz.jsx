@@ -104,7 +104,6 @@ export default function Quiz() {
                 {option.title}
               </Options>
             ))}
-            {/* TODO:ClassName= wrong,correct  */}
           </div>
         </>
       )}
