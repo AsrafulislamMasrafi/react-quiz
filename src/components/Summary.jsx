@@ -1,7 +1,8 @@
+import { useMemo } from "react";
 import { useFetch } from "../hooks/useFetch";
 
 export function Summary({ score, Img, noq }) {
-  const getKeyWord = () => {
+  const getKeyWord = useMemo(() => {
     if ((score / (noq * 5)) * 100 < 50) {
       return "failed";
     } else if ((score / (noq * 5)) * 100 < 75) {
@@ -11,8 +12,9 @@ export function Summary({ score, Img, noq }) {
     } else {
       return "excellent";
     }
-  };
-  const url = `https://api.pexels.com/v1/search?query=${getKeyWord()}`;
+  }, [score, noq]);
+
+  const url = `https://api.pexels.com/v1/search?query=${getKeyWord}`;
   const { loading, error, result } = useFetch(url, "GET", {
     Authorization: import.meta.env.VITE_APP_APIKEYIMG,
   });
