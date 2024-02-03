@@ -19,7 +19,11 @@ export default function Videos() {
         >
           {videos.map((video, i) =>
             video.noq > 0 ? (
-              <Link to={`quiz/${video.youtubeID}`} key={video.youtubeID + i}>
+              <Link
+                to={`quiz/${video.youtubeID}`}
+                key={video.youtubeID + i}
+                state={video.title}
+              >
                 <Video
                   id={video.youtubeID}
                   noq={video.noq}

@@ -1,17 +1,39 @@
-export function Summary({ score, Img }) {
+import { useFetch } from "../hooks/useFetch";
+
+export function Summary({ score, Img, noq }) {
+  const getKeyWord = () => {
+    if ((score / (noq * 5)) * 100 < 50) {
+      return "failed";
+    } else if ((score / (noq * 5)) * 100 < 75) {
+      return "good";
+    } else if ((score / (noq * 5)) * 100 < 100) {
+      return "vary good";
+    } else {
+      return "excellent";
+    }
+  };
+  const url = `https://api.pexels.com/v1/search?query=${getKeyWord()}`;
+  const { loading, error, result } = useFetch(url, "GET", {
+    Authorization: import.meta.env.VITE_APP_APIKEYIMG,
+  });
+  const image = result ? result?.photos[0].src.medium : Img;
   return (
     <div className="summary">
       <div className="point">
         {/* <!-- progress bar will be placed here --> */}
         <p className="score">
           Your score is <br />
-          {score}
+          {score} out of {noq * 5}
         </p>
       </div>
+      {loading && <div className="badge">Loading...</div>}
+      {error && <div className="badge">There was a problem</div>}
 
-      <div className="badge">
-        <img src={Img} alt="Success" />
-      </div>
+      {!loading && !error && (
+        <div className="badge">
+          <img src={image} alt="Success" />
+        </div>
+      )}
     </div>
   );
 }

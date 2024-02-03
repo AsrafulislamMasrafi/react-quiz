@@ -40,14 +40,10 @@ export default function Result() {
       {error && <h1>There was a problem</h1>}
 
       {answer && answer.length > 0 && (
-        <QuizResult
-          score={`${userScore} out of ${answer.length * 5}
-        `}
-          Img={Img}
-        >
+        <QuizResult score={userScore} noq={answer.length} Img={Img}>
           {answer.map((question, i) => (
             <AnsOfQuestion key={i + question.title} title={question.title}>
-            {question.options.map((option, i) => (
+              {question.options.map((option, i) => (
                 <Options
                   id={option + i}
                   key={option + i}
