@@ -1,6 +1,6 @@
 import { getDatabase, ref, set } from "firebase/database";
 import _ from "lodash";
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useMemo, useReducer, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Layout from "../../components/Layout";
 import MiniPlayer from "../../components/MiniPlayer";
@@ -39,7 +39,8 @@ export default function Quiz() {
   const [qna, dispatch] = useReducer(reducer, initialState);
   const navigate = useNavigate();
   // take data form firebase database on page reader and question change based on currentQuestion state
-  useEffect(() => {
+  // useMemo used because with out useMemo on save file question rerender
+  const test = useMemo(() => {
     if (questions) {
       dispatch({
         type: "questions",
@@ -47,6 +48,10 @@ export default function Quiz() {
       });
     }
   }, [questions]);
+
+  useEffect(() => {
+    test;
+  }, [test]);
 
   // progress bar next button click event
   function nextButtonHandle() {
